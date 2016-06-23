@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Socket Demo</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        .friends-list{
+            border: 1px solid black;
+            width: 20%;
+            height:400px;
+            float: left;
+        }
+        .chat-area{
+            border: 1px solid black;
+            width: 70%;
+            height:400px;
+            float: left;
+        }
+        .input-area{
+            height: 50px;
+            float: left;
+            width: 100%;
+        }
+        .content{
+            widows: 100%;
+            height:400px;
+        }
+        #inputBox{
+            width: 90%;
+            height: 25px;
+        }
+    </style>
+     <script> 
+        var server = io.connect("http://localhost:8080");
+        
+        server.on('messages', function(data) {
+            console.log('data: ',data);
+            insertMessages(data.text,data.name);
+        });
+
+        
+        server.on('connect', function(data) {
+            var name = prompt('whats your name');
+            server.emit('join',name);
+        });
+
+        function insertMessages(msg,name){
+            var para = document.createElement("p");
+            var node = document.createTextNode(name+":  "+msg);
+            para.appendChild(node);
+            var element = document.getElementById("chatBox");
+            element.appendChild(para);
+        }
+
+        function sendMessages(event){
+            if(event.keyCode === 13){
+                var msg = document.getElementById("inputBox");
+                console.log("message:",msg.value);
+                server.emit('messages',msg.value)
+            }
+        }
+
+        
+    </script>
+</head>
+<body>
+    <h1>Chat App</h1>
+    <div>
+        <div class="content">
+            <div class="friends-list"></div>
+            <div id="chatBox" class="chat-area">
+            </div>
+            <div class="input-area">
+                <input id="inputBox" placeholder="enter text here..." type="text" onkeypress="sendMessages(event)">
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
