@@ -1,0 +1,22 @@
+var http = require('http')
+
+var Worker = require('webworker-threads').Worker;
+// var w = new Worker('worker.js'); // Standard API 
+ 
+// You may also pass in a function: 
+var worker = new Worker(function(){
+  postMessage("I'm working before postMessage('ali').");
+  this.onmessage = function(event) {
+    postMessage('Hi ' + event.data);
+    self.close();
+  };
+});
+worker.onmessage = function(event) {
+  console.log("Worker said : " + event.data);
+};
+worker.postMessage('ali');
+
+http.createServer(function(req,res){
+    res.end("Hello worker");
+}).listen(3000)
+console.log("server is listening on port 3000")
