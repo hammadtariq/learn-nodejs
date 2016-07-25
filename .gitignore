@@ -1,2 +1,5 @@
-./step04_express/node_modules
-./step05_sockets/node_modules
+/step04_express/node_modules
+/step05_sockets/node_modules
+/step06_webworker/node_modules
+/step07_queue/node_modules
+/step07_queue/.vscode

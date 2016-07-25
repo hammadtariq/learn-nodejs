@@ -34,5 +34,5 @@ function readFile(request,response) {
     });
 }
 
-var server = http.createServer(readFile).listen(8080)
+var server = http.createServer(autoStreams).listen(8080)
 console.log("server listening on port 8080");
