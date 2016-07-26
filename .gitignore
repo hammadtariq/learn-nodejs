@@ -3,3 +3,5 @@
 /step06_webworker/node_modules
 /step07_queue/node_modules
 /step07_queue/.vscode
+/step08_queueWithCluster/node_modules
+/step09_testing/node_modules
